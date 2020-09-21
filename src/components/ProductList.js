@@ -1,19 +1,13 @@
 import React, { Component } from "react";
-import {
-  Button,
-  Card,
-  Col,
-  Container,
-  Row,
-} from "react-bootstrap";
+import { Button, Card, Col, Container, Row } from "react-bootstrap";
 import { getProducts } from "../services/productService";
-import {connect} from 'react-redux';
+import { connect } from "react-redux";
 import { addCart } from "../redux/cart/cartActions";
 
 class ProductList extends Component {
-  constructor(props){
+  constructor(props) {
     super(props);
-  };
+  }
   state = {
     products: [],
     filterBy: "all",
@@ -34,7 +28,6 @@ class ProductList extends Component {
     this.setState({ filterBy });
   }
 
-  
   render() {
     const filteredProducts = this.state.products.filter((product) => {
       if (this.state.filterBy === "all") return product;
@@ -111,8 +104,25 @@ class ProductList extends Component {
                   >
                     <Row>
                       <Col></Col>
-                    <Col><div style={{backgroundColor:'black',color:"white"}} >{product.details.tag}</div></Col></Row>
-                    
+                      <Col>
+                        <div
+                          style={{ backgroundColor: "black", color: "white" }}
+                        >
+                          {product.details.tag}
+                        </div>
+                      </Col>
+                    </Row>
+                    {!product.details.tag && <Row>
+                      <Col></Col>
+                      <Col>
+                        <div
+                          style={{ backgroundColor: "white", color: "white",height:30 }}
+                        >
+                          
+                        </div>
+                      </Col>
+                    </Row> }
+
                     <Card.Img
                       variant="top"
                       src={product.details.image}
@@ -143,20 +153,16 @@ class ProductList extends Component {
   }
 }
 
-const mapStateToProps = state =>{
-  return{
-      cart : state.cart
-  }
-}
+const mapStateToProps = (state) => {
+  return {
+    cart: state.cart,
+  };
+};
 
-const mapDispachToProps = dispatch => {
-  return{
-      addCart : product => dispatch(addCart(product)),
-      
-  }
-} 
+const mapDispachToProps = (dispatch) => {
+  return {
+    addCart: (product) => dispatch(addCart(product)),
+  };
+};
 
-export default connect(mapStateToProps,mapDispachToProps)(ProductList);
-
-
-
+export default connect(mapStateToProps, mapDispachToProps)(ProductList);

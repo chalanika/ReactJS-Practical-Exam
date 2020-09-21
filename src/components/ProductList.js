@@ -4,11 +4,18 @@ import { getProducts } from "../services/productService";
 import { connect } from "react-redux";
 import { addToCart } from "../redux/cart/cartActions";
 
+import Badge from "@material-ui/core/Badge";
+import { withStyles } from "@material-ui/core/styles";
+import IconButton from "@material-ui/core/IconButton";
+import ShoppingCartIcon from "@material-ui/icons/ShoppingCart";
+import Drawer from "@material-ui/core/Drawer";
+import Cart from "./Cart";
+
 class ProductList extends Component {
- 
   state = {
     products: [],
     filterBy: "all",
+    open: false,
   };
 
   async componentDidMount() {
@@ -26,14 +33,37 @@ class ProductList extends Component {
     this.setState({ filterBy });
   }
 
+  toggleDrawer(open) {
+    this.setState({ open });
+  }
+
   render() {
     const filteredProducts = this.state.products.filter((product) => {
       if (this.state.filterBy === "all") return product;
       return product.details.size === this.state.filterBy;
     });
-    console.log(6666666666666666666666666666666666666666666,this.props.cart);
+    
     return (
       <Container fluid style={{ borderColor: "black", marginTop: 50 }}>
+        <div className="d-flex flex-row-reverse">
+          <IconButton aria-label="cart" onClick={() => this.toggleDrawer(true)}>
+            <StyledBadge
+              badgeContent={this.props.totalQuantity}
+              color="secondary"
+            >
+              <ShoppingCartIcon />
+            </StyledBadge>
+          </IconButton>
+          <Drawer
+            anchor="right"
+            open={this.state.open}
+            onClose={() => this.toggleDrawer(false)}
+          >
+           <div style={{width:450,marginTop:10}}>
+             <Cart/>
+           </div>
+          </Drawer>
+        </div>
         <Row>
           <Col md={2}>
             <div style={{ fontSize: 18, fontWeight: "bold" }}>Sizes : </div>
@@ -104,22 +134,26 @@ class ProductList extends Component {
                       <Col></Col>
                       <Col>
                         <div
-                          style={{ backgroundColor: "black", color: "white" }}
+                          style={{ backgroundColor: "black", color: "white",borderRadius:5 }}
                         >
                           {product.details.tag}
                         </div>
                       </Col>
                     </Row>
-                    {!product.details.tag && <Row>
-                      <Col></Col>
-                      <Col>
-                        <div
-                          style={{ backgroundColor: "white", color: "white",height:30 }}
-                        >
-                          
-                        </div>
-                      </Col>
-                    </Row> }
+                    {!product.details.tag && (
+                      <Row>
+                        <Col></Col>
+                        <Col>
+                          <div
+                            style={{
+                              backgroundColor: "white",
+                              color: "white",
+                              height: 30,
+                            }}
+                          ></div>
+                        </Col>
+                      </Row>
+                    )}
 
                     <Card.Img
                       variant="top"
@@ -137,7 +171,9 @@ class ProductList extends Component {
                         cursor: "pointer",
                         color: "white",
                       }}
-                      onClick={()=>{this.props.addToCart(product)}}
+                      onClick={() => {
+                        this.props.addToCart(product);
+                      }}
                     >
                       Add to cart
                     </Card.Footer>
@@ -152,19 +188,27 @@ class ProductList extends Component {
 }
 
 const mapStateToProps = (state) => {
-  //console.log(state.cart)
   return {
-    
     cart: state.cart,
+    totalQuantity:state.totalQuantity,
   };
 };
 
 const mapDispachToProps = (dispatch) => {
   return {
     addToCart: (product) => {
-      //console.log(1111,product);
-      dispatch(addToCart(product))},
+      dispatch(addToCart(product));
+    },
   };
 };
+
+const StyledBadge = withStyles((theme) => ({
+  badge: {
+    right: -3,
+    top: 13,
+    border: `2px solid ${theme.palette.background.paper}`,
+    padding: "0 4px",
+  },
+}))(Badge);
 
 export default connect(mapStateToProps, mapDispachToProps)(ProductList);

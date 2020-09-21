@@ -31,7 +31,7 @@ class ProductList extends Component {
       if (this.state.filterBy === "all") return product;
       return product.details.size === this.state.filterBy;
     });
-    console.log(this.props.cart);
+    console.log(6666666666666666666666666666666666666666666,this.props.cart);
     return (
       <Container fluid style={{ borderColor: "black", marginTop: 50 }}>
         <Row>
@@ -152,8 +152,10 @@ class ProductList extends Component {
 }
 
 const mapStateToProps = (state) => {
+  //console.log(state.cart)
   return {
-    //cart: state.cart,
+    
+    cart: state.cart,
   };
 };
 

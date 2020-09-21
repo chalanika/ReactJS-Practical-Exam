@@ -2,12 +2,10 @@ import React, { Component } from "react";
 import { Button, Card, Col, Container, Row } from "react-bootstrap";
 import { getProducts } from "../services/productService";
 import { connect } from "react-redux";
-import { addCart } from "../redux/cart/cartActions";
+import { addToCart } from "../redux/cart/cartActions";
 
 class ProductList extends Component {
-  constructor(props) {
-    super(props);
-  }
+ 
   state = {
     products: [],
     filterBy: "all",
@@ -139,7 +137,7 @@ class ProductList extends Component {
                         cursor: "pointer",
                         color: "white",
                       }}
-                      //onClick={this.props.addCart(product)}
+                      onClick={()=>{this.props.addToCart(product)}}
                     >
                       Add to cart
                     </Card.Footer>
@@ -155,13 +153,15 @@ class ProductList extends Component {
 
 const mapStateToProps = (state) => {
   return {
-    cart: state.cart,
+    //cart: state.cart,
   };
 };
 
 const mapDispachToProps = (dispatch) => {
   return {
-    addCart: (product) => dispatch(addCart(product)),
+    addToCart: (product) => {
+      //console.log(1111,product);
+      dispatch(addToCart(product))},
   };
 };
 

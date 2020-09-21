@@ -1,6 +1,7 @@
-import { DataUsage } from "@material-ui/icons";
 import axios from "axios";
 
 export function getProducts() {
-  return axios.get("https://my-json-server.typicode.com/prasadhewage/ecommerce/shipments");
+  return axios.get(
+    "https://my-json-server.typicode.com/prasadhewage/ecommerce/shipments"
+  );
 }

@@ -22,7 +22,6 @@ class ProductList extends Component {
     try {
       const products = await getProducts();
       this.setState({ products: products.data });
-      console.log(products.data);
     } catch (error) {
       console.log(error);
     }
@@ -42,7 +41,7 @@ class ProductList extends Component {
       if (this.state.filterBy === "all") return product;
       return product.details.size === this.state.filterBy;
     });
-    
+
     return (
       <Container fluid style={{ borderColor: "black", marginTop: 50 }}>
         <div className="d-flex flex-row-reverse">
@@ -59,9 +58,9 @@ class ProductList extends Component {
             open={this.state.open}
             onClose={() => this.toggleDrawer(false)}
           >
-           <div style={{width:450,marginTop:10}}>
-             <Cart/>
-           </div>
+            <div style={{ width: 450, marginTop: 10 }}>
+              <Cart />
+            </div>
           </Drawer>
         </div>
         <Row>
@@ -134,7 +133,11 @@ class ProductList extends Component {
                       <Col></Col>
                       <Col>
                         <div
-                          style={{ backgroundColor: "black", color: "white",borderRadius:5 }}
+                          style={{
+                            backgroundColor: "black",
+                            color: "white",
+                            borderRadius: 5,
+                          }}
                         >
                           {product.details.tag}
                         </div>
@@ -190,7 +193,7 @@ class ProductList extends Component {
 const mapStateToProps = (state) => {
   return {
     cart: state.cart,
-    totalQuantity:state.totalQuantity,
+    totalQuantity: state.totalQuantity,
   };
 };
 

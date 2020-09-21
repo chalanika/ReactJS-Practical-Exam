@@ -30,6 +30,15 @@ const cartReducer = (state = initialState, action) => {
           cart: [...state.cart, action.product],
         };
       }
+    case REMOVE_ITEM:
+      let newCart = state.cart.filter((p) => p.id !== action.product.id);
+
+      return {
+        ...state,
+        cart: newCart,
+        totalPrice: state.totalPrice - action.product.price,
+        totalQuantity: state.totalQuantity - action.product.quantity,
+      };
     default:
       return state;
   }

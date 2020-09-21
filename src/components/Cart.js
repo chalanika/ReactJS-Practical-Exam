@@ -6,6 +6,7 @@ import ShoppingCartIcon from "@material-ui/icons/ShoppingCart";
 import { connect } from "react-redux";
 import { Col, Container, Row } from "react-bootstrap";
 import { Divider } from "@material-ui/core";
+import { removeItem } from "../redux/cart/cartActions";
 
 class Cart extends Component {
   render() {
@@ -42,7 +43,15 @@ class Cart extends Component {
                 </div>
               </div>
               <div className="col d-flex flex-row-reverse">
-                <p>${product.price}</p>{" "}
+                <p>
+                  ${product.price.toFixed(2)}{" "}
+                  <i
+                    className="fas fa-times-circle"
+                    onClick={() => {
+                      this.props.removeItem(product);
+                    }}
+                  ></i>
+                </p>
               </div>
             </Row>
             <Divider />
@@ -54,7 +63,7 @@ class Cart extends Component {
           </Col>
           <Col className="d-flex flex-row-reverse">
             <p style={{ fontWeight: "bold", color: "gray" }}>
-              $ {this.props.subtotal}
+              $ {this.props.subtotal.toFixed(2)}
             </p>
           </Col>
         </Row>
@@ -74,11 +83,18 @@ class Cart extends Component {
 }
 
 const mapStateToProps = (state) => {
-  console.log(55, state.cart);
   return {
     cart: state.cart,
     subtotal: state.totalPrice,
     totalQuantity: state.totalQuantity,
+  };
+};
+
+const mapDispachToProps = (dispatch) => {
+  return {
+    removeItem: (product) => {
+      dispatch(removeItem(product));
+    },
   };
 };
 
@@ -91,4 +107,4 @@ const StyledBadge = withStyles((theme) => ({
   },
 }))(Badge);
 
-export default connect(mapStateToProps)(Cart);
+export default connect(mapStateToProps, mapDispachToProps)(Cart);

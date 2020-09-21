@@ -1,18 +1,15 @@
-import {ADD_TO_CART,REMOVE_ITEM} from './cartType';
+import { ADD_TO_CART, REMOVE_ITEM } from "./cartType";
 
-//add cart action
-export const addToCart= (product)=>{
-    return{
-        type: ADD_TO_CART,
-        product
-    }
-}
-//remove item action
-export const removeItem=(id)=>{
-    return{
-        type: REMOVE_ITEM,
-        id
-    }
-}
+export const addToCart = (product) => {
+  return {
+    type: ADD_TO_CART,
+    product,
+  };
+};
 
-
+export const removeItem = (product) => {
+  return {
+    type: REMOVE_ITEM,
+    product,
+  };
+};

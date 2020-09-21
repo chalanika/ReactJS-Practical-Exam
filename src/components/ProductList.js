@@ -109,6 +109,10 @@ class ProductList extends Component {
                     key={product.id}
                     style={{ width: "18rem", margin: 5, padding: 5 }}
                   >
+                    <Row>
+                      <Col></Col>
+                    <Col><div style={{backgroundColor:'black',color:"white"}} >{product.details.tag}</div></Col></Row>
+                    
                     <Card.Img
                       variant="top"
                       src={product.details.image}
@@ -125,7 +129,7 @@ class ProductList extends Component {
                         cursor: "pointer",
                         color: "white",
                       }}
-                      onClick={this.props.addCart(product)}
+                      //onClick={this.props.addCart(product)}
                     >
                       Add to cart
                     </Card.Footer>
